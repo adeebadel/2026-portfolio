@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaYoutube } from "react-icons/fa6";
-import { config } from "../config";
+import { config, type Project as ConfigProject } from "../config";
 import ProjectModal from "../components/ProjectModal";
 import "./MyWorks.css";
 
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  technologies: string | string[];
-  image: string;
-  description: string;
-  githubLink?: string;
-  liveLink?: string;
+interface Project extends ConfigProject {
   youtubeLink?: string;
 }
 

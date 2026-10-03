@@ -9,6 +9,7 @@ import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import TechStackNew from "./TechStackNew";
+import Certificates from "./certificates";
 import CallToAction from "./CallToAction";
 import setSplitText from "./utils/splitText";
 
@@ -23,8 +24,10 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       setSplitText();
       setIsDesktopView(window.innerWidth > 1024);
     };
+
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
+
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
@@ -35,7 +38,9 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Cursor />
       <Navbar />
       <SocialIcons />
+
       {isDesktopView && !isMobile && children}
+
       <div className="container-main">
         <Landing />
         <About />
@@ -43,6 +48,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
         <Career />
         <Work />
         <TechStackNew />
+        <Certificates />
         <CallToAction />
         <Contact />
       </div>

@@ -3,24 +3,12 @@ import WorkImage from "./WorkImage";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
-import { config } from "../config";
+import { config, type Project } from "../config";
 import { Link } from "react-router-dom";
 import { FaGithub, FaYoutube } from "react-icons/fa6";
 import ProjectModal from "./ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  technologies: string | string[];
-  image: string;
-  description: string;
-  githubLink?: string;
-  liveLink?: string;
-  youtubeLink?: string;
-}
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -33,16 +21,17 @@ const Work = () => {
     let translateX: number = 0;
 
     function setTranslateX() {
-      const box = document.getElementsByClassName("work-box");
-      if (box.length === 0) return;
-      const rectLeft = document
-        .querySelector(".work-container")!
-        .getBoundingClientRect().left;
-      const rect = box[0].getBoundingClientRect();
-      const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-      let padding: number =
-        parseInt(window.getComputedStyle(box[0]).padding) / 2;
-      translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
+      const workFlex = document.querySelector(".work-flex") as HTMLElement;
+      const workContainer = document.querySelector(
+        ".work-container",
+      ) as HTMLElement;
+
+      if (!workFlex || !workContainer) return;
+
+      const flexWidth = workFlex.scrollWidth;
+      const containerWidth = workContainer.clientWidth;
+
+      translateX = Math.max(0, flexWidth - containerWidth);
     }
 
     setTranslateX();
@@ -103,7 +92,10 @@ const Work = () => {
                 </div>
                 <h4>Tools and features</h4>
                 <p>{project.technologies}</p>
-                <div className="work-links" onClick={(e) => e.stopPropagation()}>
+                <div
+                  className="work-links"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {project.githubLink && (
                     <a
                       href={project.githubLink}

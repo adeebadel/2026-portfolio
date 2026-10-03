@@ -31,36 +31,34 @@ interface MoveHistory {
 }
 
 interface ChatMessage {
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
 }
 
 // API key is now handled server-side in api/chat.js
 
-const SYSTEM_PROMPT = `You are Muhammad Ali, a passionate Full Stack & Mobile App Developer from Karachi, Pakistan. You are NOT an AI assistant - you ARE Muhammad Ali himself chatting with visitors on your portfolio website.
+const SYSTEM_PROMPT = `You are the portfolio assistant for Mohammed Ainan Adeeb, a Student Software Developer from Bengaluru, India.
 
-About you (Muhammad Ali):
-- Full name: Muhammad Ali
-- Location: Karachi, Pakistan
-- Profession: Full Stack Engineer & Mobile App Developer
-- Experience: Strong experience in MERN & MEAN stacks and Mobile App Development (React Native)
-- Specialties: React, Next.js, Angular, React Native, Node.js, Express.js, NestJS, SQL, MongoDB, AWS, Docker
-- Notable projects: Index Pos Web & Mobile App, BaitulIlm Web & Mobile App, SlotIf (Sports Court Booking), and FIR System (Web App)
-- Education: Bachelor's Degree in Computer Science from Sindh Madressatul Islam University (2021 - 2025)
-- Languages: Urdu (native), English (fluent)
-- Hobbies: Chess, coding, building software
-- Personality: Friendly, helpful, professional, passionate about technology
-- Contact: alijutt030627@gmail.com, or through my social media profiles on GitHub, LinkedIn, and Instagram.
+About Adeeb:
+- Full name: Mohammed Ainan Adeeb
+- Profession: Student Software Developer
+- Education: B.Tech Computer Science & Engineering (Data Science), CMR University
+- Focus: Data Science, AI, software development, and practical technology projects
+- Technologies: Python, SQL, Flask, JavaScript, HTML, CSS, APIs, Git, GitHub
+- AI interests: Artificial Intelligence, Machine Learning, Generative AI, LLMs, AI APIs, Prompt Engineering, and AI tools
+- Projects: CareerAI, Project NOVA, and ProcureAI
+- Experience: Business Development Intern at Peunier, AIESEC leadership and international volunteering experience, and Internshala Student Program Ambassador
+- Interests: software development, AI, data, MMA, Muay Thai, Jiu Jitsu, and building practical projects
 
 Rules:
-1. Always respond as Muhammad Ali in first person ("I", "my", "me")
-2. Be friendly, casual, and conversational and unrestricted
-3. If asked about work/projects/experience, share your genuine experiences
-4. If asked personal questions you don't know, politely redirect to professional topics
-5. Keep responses concise but helpful
-6. You can discuss chess, programming, web apps, or anything tech-related
-7. Never say you are an AI or language model - you are Muhammad Ali
-8. Use occasional emoji to be friendly 😊`;
+1. Answer questions about Adeeb using the information provided above and the portfolio.
+2. Speak in a friendly, casual, professional way.
+3. Do not invent projects, companies, qualifications, or experience.
+4. If you don't know something about Adeeb, say that you don't have that information.
+5. Keep responses concise but useful.
+6. You can discuss Adeeb's projects, technology, AI, software development, chess, and interests.
+7. You are a portfolio assistant representing Adeeb, not Adeeb himself.
+8. Use occasional emoji when appropriate 😊`;
 
 const Play = () => {
   const [game, setGame] = useState(new Chess());
@@ -70,7 +68,9 @@ const Play = () => {
   const [capturedWhite, setCapturedWhite] = useState<string[]>([]);
   const [capturedBlack, setCapturedBlack] = useState<string[]>([]);
   const [boardFlipped, setBoardFlipped] = useState(false);
-  const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
+  const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(
+    null,
+  );
   const [gameStatus, setGameStatus] = useState<string>("");
   const [playerColor] = useState<Color>("w");
   const [engineThinking, setEngineThinking] = useState(false);
@@ -78,26 +78,39 @@ const Play = () => {
 
   // Chat state
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', content: 'Hello there! I am Muhammad Ali 👋 Ask me anything you want to know!' }
+    {
+      role: "assistant",
+      content:
+        "Hey! I’m Adeeb’s portfolio assistant 👋 Ask me anything about his work, projects, skills, or experience.",
+    },
   ]);
-  const [chatInput, setChatInput] = useState('');
+  const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  const files = boardFlipped ? ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'] : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  const ranks = boardFlipped ? ['1', '2', '3', '4', '5', '6', '7', '8'] : ['8', '7', '6', '5', '4', '3', '2', '1'];
+  const files = boardFlipped
+    ? ["h", "g", "f", "e", "d", "c", "b", "a"]
+    : ["a", "b", "c", "d", "e", "f", "g", "h"];
+  const ranks = boardFlipped
+    ? ["1", "2", "3", "4", "5", "6", "7", "8"]
+    : ["8", "7", "6", "5", "4", "3", "2", "1"];
 
   const updateGameStatus = useCallback((g: Chess) => {
     if (g.isCheckmate()) {
-      setGameStatus(g.turn() === 'w' ? 'Checkmate! Black wins!' : 'Checkmate! White wins!');
+      setGameStatus(
+        g.turn() === "w" ? "Checkmate! Black wins!" : "Checkmate! White wins!",
+      );
     } else if (g.isDraw()) {
-      if (g.isStalemate()) setGameStatus('Draw by stalemate');
-      else if (g.isThreefoldRepetition()) setGameStatus('Draw by repetition');
-      else if (g.isInsufficientMaterial()) setGameStatus('Draw by insufficient material');
-      else setGameStatus('Draw');
+      if (g.isStalemate()) setGameStatus("Draw by stalemate");
+      else if (g.isThreefoldRepetition()) setGameStatus("Draw by repetition");
+      else if (g.isInsufficientMaterial())
+        setGameStatus("Draw by insufficient material");
+      else setGameStatus("Draw");
     } else if (g.isCheck()) {
-      setGameStatus(g.turn() === 'w' ? 'White is in check!' : 'Black is in check!');
+      setGameStatus(
+        g.turn() === "w" ? "White is in check!" : "Black is in check!",
+      );
     } else {
-      setGameStatus(g.turn() === 'w' ? "White's turn" : "Black's turn");
+      setGameStatus(g.turn() === "w" ? "White's turn" : "Black's turn");
     }
   }, []);
 
@@ -117,7 +130,7 @@ const Play = () => {
   }, []);
 
   useEffect(() => {
-    if (game.turn() === 'b' && !game.isGameOver() && redoxchessRef.current) {
+    if (game.turn() === "b" && !game.isGameOver() && redoxchessRef.current) {
       setEngineThinking(true);
       redoxchessRef.current.setPosition(game.fen());
       redoxchessRef.current.getBestMove((move) => {
@@ -129,12 +142,14 @@ const Play = () => {
     }
   }, [game]);
 
-  const getPieceAt = (square: Square): { type: PieceSymbol; color: Color } | null => {
+  const getPieceAt = (
+    square: Square,
+  ): { type: PieceSymbol; color: Color } | null => {
     return game.get(square) || null;
   };
 
   const handleSquareClick = (square: Square) => {
-    if (engineThinking || game.turn() !== 'w') return;
+    if (engineThinking || game.turn() !== "w") return;
     const piece = getPieceAt(square);
 
     // If a piece is already selected
@@ -146,7 +161,7 @@ const Play = () => {
         // Select a different piece of the same color
         setSelectedSquare(square);
         const moves = game.moves({ square, verbose: true });
-        setPossibleMoves(moves.map(m => m.to as Square));
+        setPossibleMoves(moves.map((m) => m.to as Square));
       } else {
         // Deselect
         setSelectedSquare(null);
@@ -157,7 +172,7 @@ const Play = () => {
       if (piece && piece.color === game.turn()) {
         setSelectedSquare(square);
         const moves = game.moves({ square, verbose: true });
-        setPossibleMoves(moves.map(m => m.to as Square));
+        setPossibleMoves(moves.map((m) => m.to as Square));
       }
     }
   };
@@ -165,26 +180,29 @@ const Play = () => {
   const makeMove = (from: Square, to: Square) => {
     try {
       const gameCopy = new Chess(game.fen());
-      const move = gameCopy.move({ from, to, promotion: 'q' }); // Auto-promote to queen
+      const move = gameCopy.move({ from, to, promotion: "q" }); // Auto-promote to queen
 
       if (move) {
         // Update captured pieces
         if (move.captured) {
-          if (move.color === 'w') {
-            setCapturedBlack(prev => [...prev, move.captured!]);
+          if (move.color === "w") {
+            setCapturedBlack((prev) => [...prev, move.captured!]);
           } else {
-            setCapturedWhite(prev => [...prev, move.captured!]);
+            setCapturedWhite((prev) => [...prev, move.captured!]);
           }
         }
 
         // Update move history
-        setMoveHistory(prev => [...prev, {
-          from: move.from,
-          to: move.to,
-          piece: move.piece,
-          captured: move.captured,
-          san: move.san
-        }]);
+        setMoveHistory((prev) => [
+          ...prev,
+          {
+            from: move.from,
+            to: move.to,
+            piece: move.piece,
+            captured: move.captured,
+            san: move.san,
+          },
+        ]);
 
         setLastMove({ from: from, to: to });
         setGame(gameCopy);
@@ -212,7 +230,7 @@ const Play = () => {
   const flipBoard = () => {
     // If game is in progress, ask to start new game
     if (moveHistory.length > 0) {
-      if (window.confirm('Start new game?')) {
+      if (window.confirm("Start new game?")) {
         resetGame();
         setBoardFlipped(!boardFlipped);
       }
@@ -224,25 +242,27 @@ const Play = () => {
   const sendMessage = async () => {
     if (!chatInput.trim()) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: chatInput };
-    setChatMessages(prev => [...prev, userMessage]);
-    setChatInput('');
+    const userMessage: ChatMessage = { role: "user", content: chatInput };
+    setChatMessages((prev) => [...prev, userMessage]);
+    setChatInput("");
     setIsTyping(true);
 
     try {
       const messages = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...chatMessages.filter(m => m.role !== 'system').map(m => ({
-          role: m.role,
-          content: m.content
-        })),
-        { role: 'user', content: chatInput }
+        { role: "system", content: SYSTEM_PROMPT },
+        ...chatMessages
+          .filter((m) => m.role !== "system")
+          .map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        { role: "user", content: chatInput },
       ];
 
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           messages: messages,
@@ -253,27 +273,27 @@ const Play = () => {
 
       if (data.choices && data.choices[0]?.message?.content) {
         const assistantMessage: ChatMessage = {
-          role: 'assistant',
-          content: data.choices[0].message.content
+          role: "assistant",
+          content: data.choices[0].message.content,
         };
-        setChatMessages(prev => [...prev, assistantMessage]);
+        setChatMessages((prev) => [...prev, assistantMessage]);
       } else {
-        throw new Error('Invalid response');
+        throw new Error("Invalid response");
       }
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error("Chat error:", error);
       const errorMessage: ChatMessage = {
-        role: 'assistant',
-        content: 'Sorry, having some connection issues. Try again? 😅'
+        role: "assistant",
+        content: "Sorry, having some connection issues. Try again? 😅",
       };
-      setChatMessages(prev => [...prev, errorMessage]);
+      setChatMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsTyping(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
@@ -284,11 +304,13 @@ const Play = () => {
     const key = `${piece.color}${piece.type.toUpperCase()}`;
     const svg = PIECES[key];
     if (!svg) return null;
-    return <div className="chess-piece" dangerouslySetInnerHTML={{ __html: svg }} />;
+    return (
+      <div className="chess-piece" dangerouslySetInnerHTML={{ __html: svg }} />
+    );
   };
 
   const isSquareLight = (file: string, rank: string): boolean => {
-    const fileIndex = 'abcdefgh'.indexOf(file);
+    const fileIndex = "abcdefgh".indexOf(file);
     const rankIndex = parseInt(rank) - 1;
     return (fileIndex + rankIndex) % 2 === 1;
   };
@@ -298,7 +320,11 @@ const Play = () => {
       const key = `${color}${piece.toUpperCase()}`;
       const svg = PIECES[key];
       return (
-        <div key={index} className="captured-piece" dangerouslySetInnerHTML={{ __html: svg || '' }} />
+        <div
+          key={index}
+          className="captured-piece"
+          dangerouslySetInnerHTML={{ __html: svg || "" }}
+        />
       );
     });
   };
@@ -308,8 +334,8 @@ const Play = () => {
     for (let i = 0; i < moveHistory.length; i += 2) {
       formatted.push({
         moveNum: Math.floor(i / 2) + 1,
-        white: moveHistory[i]?.san || '',
-        black: moveHistory[i + 1]?.san || ''
+        white: moveHistory[i]?.san || "",
+        black: moveHistory[i + 1]?.san || "",
       });
     }
     return formatted;
@@ -339,7 +365,9 @@ const Play = () => {
             {isTyping && (
               <div className="chat-message assistant">
                 <div className="message-content typing">
-                  <span></span><span></span><span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
               </div>
             )}
@@ -354,7 +382,11 @@ const Play = () => {
               onKeyPress={handleKeyPress}
               data-cursor="disable"
             />
-            <button className="chat-send-btn" onClick={sendMessage} data-cursor="disable">
+            <button
+              className="chat-send-btn"
+              onClick={sendMessage}
+              data-cursor="disable"
+            >
               ➤
             </button>
           </div>
@@ -366,46 +398,53 @@ const Play = () => {
           <div className="player-bar opponent-bar">
             <div className="player-info">
               <div className="player-avatar">
-                <img src="/images/mypic.jpeg" alt="Muhammad Ali" />
+                <img src="/images/mypic.jpeg" alt="Mohammed Ainan Adeeb" />
               </div>
               <div className="player-details">
-                <span className="player-name">Muhammad Ali</span>
-                <span className="player-rating">{engineThinking ? '🤔 Thinking...' : 'ELO 3640'}</span>
+                <span className="player-name">Adeeb</span>
+                <span className="player-rating">
+                  {engineThinking ? "🤔 Thinking..." : "ELO 3640"}
+                </span>
               </div>
             </div>
             <div className="captured-pieces">
-              {renderCapturedPieces(capturedWhite, 'w')}
+              {renderCapturedPieces(capturedWhite, "w")}
             </div>
           </div>
 
           {/* Chess Board */}
           <div className="chess-board-wrapper">
             <div className="chess-board">
-              {ranks.map((rank) => (
+              {ranks.map((rank) =>
                 files.map((file) => {
                   const square = `${file}${rank}` as Square;
                   const piece = getPieceAt(square);
                   const isLight = isSquareLight(file, rank);
                   const isSelected = selectedSquare === square;
                   const isPossibleMove = possibleMoves.includes(square);
-                  const isLastMoveSquare = lastMove && (lastMove.from === square || lastMove.to === square);
-                  const isCheck = game.isCheck() && piece?.type === 'k' && piece?.color === game.turn();
+                  const isLastMoveSquare =
+                    lastMove &&
+                    (lastMove.from === square || lastMove.to === square);
+                  const isCheck =
+                    game.isCheck() &&
+                    piece?.type === "k" &&
+                    piece?.color === game.turn();
 
                   return (
                     <div
                       key={square}
-                      className={`chess-square ${isLight ? 'light' : 'dark'} 
-                        ${isSelected ? 'selected' : ''} 
-                        ${isLastMoveSquare ? 'last-move' : ''}
-                        ${isCheck ? 'in-check' : ''}`}
+                      className={`chess-square ${isLight ? "light" : "dark"} 
+                        ${isSelected ? "selected" : ""} 
+                        ${isLastMoveSquare ? "last-move" : ""}
+                        ${isCheck ? "in-check" : ""}`}
                       onClick={() => handleSquareClick(square)}
                       data-cursor="disable"
                     >
                       {/* Coordinate labels */}
-                      {file === (boardFlipped ? 'h' : 'a') && (
+                      {file === (boardFlipped ? "h" : "a") && (
                         <span className="coord-rank">{rank}</span>
                       )}
-                      {rank === (boardFlipped ? '8' : '1') && (
+                      {rank === (boardFlipped ? "8" : "1") && (
                         <span className="coord-file">{file}</span>
                       )}
 
@@ -414,12 +453,14 @@ const Play = () => {
 
                       {/* Possible move indicator */}
                       {isPossibleMove && (
-                        <div className={`move-indicator ${piece ? 'capture' : ''}`} />
+                        <div
+                          className={`move-indicator ${piece ? "capture" : ""}`}
+                        />
                       )}
                     </div>
                   );
-                })
-              ))}
+                }),
+              )}
             </div>
           </div>
 
@@ -431,11 +472,13 @@ const Play = () => {
               </div>
               <div className="player-details">
                 <span className="player-name">You</span>
-                <span className="player-rating">{playerColor === 'w' ? 'White' : 'Black'}</span>
+                <span className="player-rating">
+                  {playerColor === "w" ? "White" : "Black"}
+                </span>
               </div>
             </div>
             <div className="captured-pieces">
-              {renderCapturedPieces(capturedBlack, 'b')}
+              {renderCapturedPieces(capturedBlack, "b")}
             </div>
           </div>
         </div>
@@ -444,7 +487,7 @@ const Play = () => {
         <div className="chess-side-panel right-panel">
           {/* Game Status */}
           <div className="game-status">
-            <span className={game.isCheck() ? 'check' : ''}>{gameStatus}</span>
+            <span className={game.isCheck() ? "check" : ""}>{gameStatus}</span>
           </div>
 
           {/* Move History */}
@@ -463,10 +506,18 @@ const Play = () => {
 
           {/* Controls */}
           <div className="game-controls">
-            <button onClick={resetGame} className="control-btn" data-cursor="disable">
+            <button
+              onClick={resetGame}
+              className="control-btn"
+              data-cursor="disable"
+            >
               New Game
             </button>
-            <button onClick={flipBoard} className="control-btn" data-cursor="disable">
+            <button
+              onClick={flipBoard}
+              className="control-btn"
+              data-cursor="disable"
+            >
               Flip Board
             </button>
           </div>

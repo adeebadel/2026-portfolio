@@ -1,139 +1,214 @@
 .contact-section {
-  margin: auto;
-  padding-bottom: 150px;
-  margin-top: 0;
   position: relative;
-  z-index: 1;
-  background-color: var(--backgroundColor);
-  min-height: 60vh;
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  margin: 0 auto;
+  padding: 150px 0 60px;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.contact-container {
+  width: 100%;
+}
+
+.contact-container > h3 {
+  margin: 0 0 70px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(42px, 7vw, 100px);
+  font-weight: 600;
+  line-height: .9;
+  letter-spacing: -5px;
+}
+
+.contact-container > h3::before {
+  content: "GET IN TOUCH / 001";
+  display: block;
+  margin-bottom: 25px;
+  color: rgba(255,255,255,.3);
+  font-family: monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+
+.contact-flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 16px;
+}
+
+.contact-box {
+  position: relative;
+  min-height: 260px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,.055),
+    rgba(255,255,255,.015)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.contact-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 25px;
+  width: 55px;
+  height: 1px;
+  background: var(--accentColor);
+  box-shadow: 0 0 15px var(--accentColor);
+}
+
+.contact-box::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  bottom: -60px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 50%;
+}
+
+.contact-box h4 {
+  margin: 0 0 16px;
+  color: rgba(255,255,255,.35);
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.contact-box p {
+  margin: 0 0 40px;
+  color: rgba(255,255,255,.7);
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.contact-box p a {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .25s ease;
+}
+
+.contact-box p a:hover {
+  opacity: .6;
+}
+
+.contact-social {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  color: rgba(255,255,255,.7);
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color .25s ease, padding .25s ease;
+  box-sizing: border-box;
+}
+
+.contact-social svg {
+  font-size: 15px;
+  transition: transform .25s ease;
+}
+
+.contact-social:hover {
+  padding-left: 6px;
+  color: #fff;
+}
+
+.contact-social:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.contact-box:last-child {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-}
-.contact-section h3 {
-  font-size: 32px;
-  font-weight: 400;
-  text-transform: uppercase;
-  margin: 0;
-  margin-bottom: 30px;
-}
-.contact-flex {
-  display: flex;
   justify-content: space-between;
 }
-.contact-flex h4 {
-  font-weight: 500;
+
+.contact-box:last-child h2 {
   margin: 0;
-  opacity: 0.6;
-  font-size: 14px;
-}
-.contact-box {
-  display: flex;
-  flex-direction: column;
-}
-.contact-flex p {
-  margin-top: 8px;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-a.contact-social {
-  font-size: 16px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 8px;
-}
-.contact-box h2 {
+  color: rgba(255,255,255,.72);
+  font-family: "Geist", sans-serif;
+  font-size: clamp(22px, 2.3vw, 34px);
   font-weight: 400;
-  font-size: 16px;
-  margin: 0;
-  line-height: 22px;
+  line-height: 1.2;
+  letter-spacing: -1.5px;
 }
-.contact-box h2 > span {
-  color: var(--accentColor);
+
+.contact-box:last-child h2 span {
+  color: #fff;
 }
-.contact-box h5 {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 14px;
+
+.contact-box:last-child h5 {
   display: flex;
-  gap: 8px;
-  opacity: 0.5;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  color: rgba(255,255,255,.3);
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
-@media only screen and (min-width: 600px) {
-  .contact-section h3 {
-    font-size: 40px;
-  }
-  .contact-box h2 {
-    font-size: 18px;
-  }
-  a.contact-social {
-    font-size: 18px;
-  }
-  .contact-flex h4 {
-    font-size: 15px;
-  }
-  .contact-flex p {
-    font-size: 15px;
-  }
-}
-@media only screen and (min-width: 900px) {
-  .contact-section h3 {
-    font-size: 48px;
-  }
-  .contact-box h2 {
-    font-size: 20px;
-  }
-  a.contact-social {
-    font-size: 22px;
-  }
-}
-@media only screen and (min-width: 1300px) {
-  .contact-section h3 {
-    font-size: 55px;
-  }
-  .contact-box h2 {
-    font-size: 22px;
-  }
-  a.contact-social {
-    font-size: 24px;
-  }
-}
-@media only screen and (min-width: 1600px) {
-  .contact-section h3 {
-    font-size: 60px;
-    margin-bottom: 40px;
-  }
-  .contact-box h2 {
-    font-size: 23px;
-  }
-  a.contact-social {
-    font-size: 25px;
-  }
-  .contact-flex p {
-    margin-top: 10px;
-    margin-bottom: 20px;
-  }
-  .contact-box h5 {
-    font-size: 20px;
-    line-height: 20px;
-    gap: 10px;
-  }
-}
+
 @media only screen and (max-width: 900px) {
   .contact-flex {
-    flex-direction: column;
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
   }
-  .contact-flex p {
-    margin-bottom: 0px;
+
+  .contact-box:last-child {
+    grid-column: 1 / -1;
+    min-height: 220px;
   }
-  .contact-flex h4 {
-    margin-top: 20px;
-  }
+}
+
+@media only screen and (max-width: 600px) {
   .contact-section {
-    margin-top: 50px;
-    padding-bottom: 50px;
+    width: calc(100% - 30px);
+    padding: 100px 0 40px;
+    min-height: auto;
   }
-  .contact-container {
-    width: calc(100% - 25px);
+
+  .contact-container > h3 {
+    margin-bottom: 45px;
+    font-size: 48px;
+    letter-spacing: -3px;
+  }
+
+  .contact-container > h3::before {
+    margin-bottom: 18px;
+  }
+
+  .contact-flex {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-box,
+  .contact-box:last-child {
+    grid-column: auto;
+    min-height: 220px;
+    padding: 25px;
+  }
+
+  .contact-box:last-child h2 {
+    font-size: 26px;
   }
 }

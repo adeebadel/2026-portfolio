@@ -47,7 +47,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          {config.developer.fullName.replace(/\s+/g, '')}
+          {config.developer.fullName.replace(/\s+/g, "")}
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
@@ -63,8 +63,10 @@ const Loading = ({ percent }: { percent: number }) => {
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
-            <span>&nbsp; Full Stack Engineer &nbsp;</span> <span>&nbsp; Mobile App Developer &nbsp;</span>
-            <span>&nbsp; Full Stack Engineer &nbsp;</span> <span>&nbsp; Mobile App Developer &nbsp;</span>
+            <span>&nbsp; AI Software Developer &nbsp;</span>
+            <span>&nbsp; Data Science & AI &nbsp;</span>
+            <span>&nbsp; AI Software Developer &nbsp;</span>
+            <span>&nbsp; Data Science & AI &nbsp;</span>
           </Marquee>
         </div>
         <div

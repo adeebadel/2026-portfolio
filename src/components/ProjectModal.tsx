@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaGithub, FaYoutube } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
+import type { Project } from "../config";
 import "./styles/ProjectModal.css";
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  technologies: string | string[];
-  image: string;
-  description: string;
-  githubLink?: string;
-  liveLink?: string;
-  youtubeLink?: string;
-}
 
 interface ProjectModalProps {
   project: Project;

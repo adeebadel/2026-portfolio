@@ -2,7 +2,6 @@ import {
   FaGithub,
   FaInstagram,
   FaLinkedinIn,
-  FaXTwitter,
 } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
@@ -74,13 +73,6 @@ const SocialIcons = () => {
             </a>
           </span>
         )}
-        {config.contact.twitter && (
-          <span>
-            <a href={config.contact.twitter} target="_blank" rel="noopener noreferrer">
-              <FaXTwitter />
-            </a>
-          </span>
-        )}
         {config.contact.instagram && (
           <span>
             <a href={config.contact.instagram} target="_blank" rel="noopener noreferrer">
@@ -89,7 +81,7 @@ const SocialIcons = () => {
           </span>
         )}
       </div>
-      <a className="resume-button" href="/Muhammad_Ali_Resume.pdf" target="_blank" rel="noopener noreferrer">
+      <a className="resume-button" href="/Mohammed_Ainan_Adeeb_Resume.pdf" target="_blank" rel="noopener noreferrer">
         <HoverLinks text="RESUME" />
         <span>
           <TbNotes />

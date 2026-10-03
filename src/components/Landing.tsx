@@ -13,27 +13,48 @@ const Landing = ({ children }: PropsWithChildren) => {
         <div className="landing-container">
           <div className="landing-intro">
             <h2>Hello! I'm</h2>
+
             <h1>
               {firstName.toUpperCase()}
-              {' '}
+              {" "}
               <br />
               {lastName && <span>{lastName.toUpperCase()}</span>}
             </h1>
           </div>
+
           <div className="landing-info">
+            <div className="profile-photo-wrap">
+              <img
+                src="/images/adeeb.jpg"
+                alt="Adeeb"
+                className="profile-photo"
+              />
+              <span className="profile-photo-label">
+                PROFILE / 001
+              </span>
+            </div>
+
             <h3>A</h3>
+
             <h2 className="landing-info-h2">
-              <div className="landing-h2-1">Full Stack</div>
+              <div className="landing-h2-1">Student</div>
             </h2>
+
             <h2>
-              <div className="landing-h2-info">Software Engineer</div>
+              <div className="landing-h2-info">
+                Software Developer
+              </div>
             </h2>
           </div>
-          {/* Mobile photo - shows only on mobile when 3D character is hidden */}
+
           <div className="mobile-photo">
-            <img src="/images/mypic_mobile.jpg" alt={config.developer.fullName} />
+            <img
+              src="/images/adeeb.jpg"
+              alt={config.developer.fullName}
+            />
           </div>
         </div>
+
         {children}
       </div>
     </>

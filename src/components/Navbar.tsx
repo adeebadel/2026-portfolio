@@ -4,14 +4,12 @@ import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 import "./styles/Navbar.css";
-import { config } from "../config";
 
 gsap.registerPlugin(ScrollTrigger);
 export let lenis: Lenis | null = null;
 
 const Navbar = () => {
   useEffect(() => {
-    // Initialize Lenis smooth scroll
     lenis = new Lenis({
       duration: 1.7,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -23,29 +21,32 @@ const Navbar = () => {
       infinite: false,
     });
 
-    // Start paused
     lenis.stop();
 
-    // Handle smooth scroll animation frame
     function raf(time: number) {
       lenis?.raf(time);
       requestAnimationFrame(raf);
     }
+
     requestAnimationFrame(raf);
 
-    // Handle navigation links
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
+
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
+      const element = elem as HTMLAnchorElement;
+
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
+
+          const target = e.currentTarget as HTMLAnchorElement;
+          const section = target.getAttribute("data-href");
+
           if (section && lenis) {
-            const target = document.querySelector(section) as HTMLElement;
-            if (target) {
-              lenis.scrollTo(target, {
+            const targetElement = document.querySelector(section) as HTMLElement;
+
+            if (targetElement) {
+              lenis.scrollTo(targetElement, {
                 offset: 0,
                 duration: 1.5,
               });
@@ -55,39 +56,43 @@ const Navbar = () => {
       });
     });
 
-    // Handle resize
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       lenis?.resize();
-    });
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
+      window.removeEventListener("resize", handleResize);
       lenis?.destroy();
     };
   }, []);
+
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          MA
+          ADEEB
         </a>
-        <a
-          href={`mailto:${config.contact.email}`}
-          className="navbar-connect"
-          data-cursor="disable"
-        >
-          {config.contact.email}
-        </a>
+
+        <div className="navbar-status">
+          <span className="status-dot"></span>
+          BUILDING IN PUBLIC
+        </div>
+
         <ul>
           <li>
             <a data-href="#about" href="#about">
               <HoverLinks text="ABOUT" />
             </a>
           </li>
+
           <li>
             <a data-href="#work" href="#work">
               <HoverLinks text="WORK" />
             </a>
           </li>
+
           <li>
             <a data-href="#contact" href="#contact">
               <HoverLinks text="CONTACT" />
@@ -96,8 +101,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <div className="landing-circle1"></div>
-      <div className="landing-circle2"></div>
       <div className="nav-fade"></div>
     </>
   );
